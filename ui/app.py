@@ -20,11 +20,71 @@ st.set_page_config(
 )
 
 # =================================================
-# 🔥 ABSOLUTE HARD RESET + FIXED UI
+# GLOBAL STYLES
 # =================================================
 st.markdown(
     """
 <style>
+/* =====================================================
+   STREAMLIT TOP HEADER — DARK GRADIENT BLUE
+===================================================== */
+
+/* Main toolbar */
+div[data-testid="stToolbar"] {
+    background: linear-gradient(
+        135deg,
+        #0B1E3A 0%,
+        #0F2A4F 45%,
+        #0B1E3A 100%
+    ) !important;
+
+    border-bottom: 1px solid rgba(56,189,248,0.25) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.55) !important;
+}
+
+/* Inner wrapper safety */
+div[data-testid="stToolbar"] > div {
+    background: transparent !important;
+}
+
+/* Deploy button */
+div[data-testid="stAppDeployButton"] button {
+    background: linear-gradient(
+        135deg,
+        rgba(56,189,248,0.25),
+        rgba(99,102,241,0.25)
+    ) !important;
+
+    border: 1px solid rgba(56,189,248,0.4) !important;
+    color: #EAEAF0 !important;
+    border-radius: 10px !important;
+    backdrop-filter: blur(12px);
+}
+
+/* Deploy button hover */
+div[data-testid="stAppDeployButton"] button:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(56,189,248,0.4),
+        rgba(99,102,241,0.4)
+    ) !important;
+}
+
+/* Three-dot menu button */
+span[data-testid="stMainMenu"] button {
+    color: #EAEAF0 !important;
+}
+
+/* Icons inside header */
+div[data-testid="stToolbar"] svg {
+    fill: #EAEAF0 !important;
+    opacity: 0.9;
+}
+
+/* Remove default Streamlit grey */
+.stAppToolbar {
+    background: transparent !important;
+}
 
 /* ================= HARD RESET ================= */
 html, body, * {
@@ -53,7 +113,7 @@ h1 {
 
 .subtitle {
     text-align: center;
-    color: rgba(234,234,240,0.75) !important;
+    color: rgba(234,234,240,0.75);
     margin-bottom: 40px;
 }
 
@@ -104,237 +164,82 @@ h1 {
     box-shadow: 0 14px 40px rgba(0,0,0,0.6);
 }
 
-/* 🔥 FORCE MESSAGE TEXT FULL BRIGHT */
-.stChatMessage p,
-.stChatMessage span,
-.stChatMessage div {
+/* Force text brightness */
+.stChatMessage * {
     color: #EAEAF0 !important;
-    opacity: 1 !important;
 }
 
-/* ================= INPUT BAR ================= */
+/* =====================================================
+   INPUT AREA — LIGHT DARK GREY (FINAL)
+===================================================== */
+
+/* Chat input bar */
 section[data-testid="stChatInput"] {
     background: linear-gradient(
         180deg,
-        rgba(11,15,26,0.95),
-        rgba(11,15,26,1)
-    );
+        #1F2937,
+        #111827
+    ) !important;
     border-top: 1px solid rgba(255,255,255,0.12);
-    backdrop-filter: blur(24px);
-    padding: 18px 0 8px 0;
+    padding: 16px 0 10px 0;
 }
 
-/* ================= TEXTAREA FIX (CRITICAL) ================= */
-textarea {
-    background: rgba(15,23,42,0.98) !important;
+/* Remove inner white wrappers */
+section[data-testid="stChatInput"] > div,
+section[data-testid="stChatInput"] form,
+section[data-testid="stChatInput"] form > div {
+    background: transparent !important;
+    padding-bottom: 0 !important;
+}
+
+/* TEXTAREA */
+section[data-testid="stChatInput"] textarea {
+    background: #2A3344 !important;   /* LIGHT DARK GREY */
     border-radius: 999px !important;
     padding: 16px 24px !important;
     font-size: 15px !important;
 
-    /* 🔥 THIS IS THE REAL FIX */
     color: #EAEAF0 !important;
     -webkit-text-fill-color: #EAEAF0 !important;
-    caret-color: #00C6FF !important;
+    caret-color: #38BDF8 !important;
 
-    opacity: 1 !important;
     border: 1px solid rgba(255,255,255,0.25) !important;
-}
-
-/* Placeholder */
-textarea::placeholder {
-    color: rgba(15,23,42,0.98) !important;
-    -webkit-text-fill-color: rgba(234,234,240,0.55) !important;
-}
-
-/* Focus ring FIX */
-textarea:focus,
-textarea:focus-visible {
-    outline: none !important;
-    border-color: rgba(0,198,255,0.8) !important;
-    box-shadow:
-        0 0 0 2px rgba(0,198,255,0.3),
-        0 0 35px rgba(106,90,205,0.55) !important;
-}
-
-/* Kill browser / Streamlit outlines */
-*:focus {
-    outline: none !important;
-}
-
-/* ================= REMOVE FOOTER ================= */
-footer {
-    display: none !important;
-}
-
-/* ================= SCROLLBAR ================= */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.22);
-    border-radius: 4px;
-}
-/* ================= REMOVE RED VALIDATION OUTLINE ================= */
-
-/* Kill outline on chat input wrapper */
-section[data-testid="stChatInput"],
-section[data-testid="stChatInput"] * {
-    outline: none !important;
-    box-shadow: none !important;
-    border: none !important;
-}
-
-/* Kill browser validation ring */
-form:has(textarea),
-div:has(textarea) {
-    outline: none !important;
-    box-shadow: none !important;
-    border: none !important;
-}
-
-/* Safari / Chrome autofill & validation */
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0px 1000px rgba(15,23,42,0.98) inset !important;
-    -webkit-text-fill-color: #EAEAF0 !important;
-}
-
-/* Absolute nuclear option */
-*:focus-visible {
-    outline: none !important;
-}
-/* =========================================================
-   REMOVE LEFT EMPTY / ROUNDED AREA (REAL FIX)
-========================================================= */
-
-/* Outer wrapper of chat input */
-section[data-testid="stChatInput"] > div {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    background: transparent !important;
-}
-
-/* Inner wrapper */
-section[data-testid="stChatInput"] > div > div {
-    padding-left: 0 !important;
-    background: transparent !important;
-}
-
-/* Force textarea to start from extreme left */
-section[data-testid="stChatInput"] textarea {
-    margin-left: 0 !important;
     width: 100% !important;
 }
 
-/* Remove any min-width or inset spacing */
-section[data-testid="stChatInput"] * {
-    box-sizing: border-box !important;
+/* Placeholder */
+section[data-testid="stChatInput"] textarea::placeholder {
+    color: rgba(234,234,240,0.55) !important;
 }
 
-/* =========================================================
-   FIX 1 — KILL WHITE AREA BELOW CHAT INPUT
-========================================================= */
-
-/* Section itself */
-section[data-testid="stChatInput"] {
-    background: linear-gradient(
-        180deg,
-        rgba(11,15,26,0.95),
-        rgba(11,15,26,1)
-    ) !important;
+/* Focus */
+section[data-testid="stChatInput"] textarea:focus {
+    outline: none !important;
+    border-color: rgba(56,189,248,0.8) !important;
+    box-shadow:
+        0 0 0 2px rgba(56,189,248,0.3),
+        0 0 30px rgba(106,90,205,0.4);
 }
 
-/* Immediate Streamlit wrapper */
-section[data-testid="stChatInput"] > div {
-    background: linear-gradient(
-        180deg,
-        rgba(11,15,26,0.95),
-        rgba(11,15,26,1)
-    ) !important;
-    padding-bottom: 0 !important;
-}
-
-/* Form wrapper */
-section[data-testid="stChatInput"] form {
-    background: transparent !important;
-    padding-bottom: 0 !important;
-}
-
-/* Inner layout div */
-section[data-testid="stChatInput"] form > div {
-    background: transparent !important;
-}
-
-/* Absolute bottom safety (kills Safari white bleed) */
-section[data-testid="stChatInput"]::after {
-    content: "";
-    display: block;
-    height: 8px;
-    background: linear-gradient(
-        180deg,
-        rgba(11,15,26,1),
-        rgba(11,15,26,1)
-    );
-}
-
-
-/* =========================================================
-   FIX 2 — PERFECT SEND ARROW ALIGNMENT
-========================================================= */
-
-/* Button wrapper */
+/* SEND BUTTON ALIGNMENT */
 section[data-testid="stChatInput"] button {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    height: 100% !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
 }
 
-/* SVG icon itself */
-section[data-testid="stChatInput"] button svg {
-    display: block !important;
-    margin: auto !important;
-    vertical-align: middle !important;
-}
-/* =========================================================
-   🔥 FINAL FINAL FIX — REMOVE INPUT AREA WHITE STRIP
-========================================================= */
-
-/* Kill Streamlit white block behind input */
-section.main {
-    background: transparent !important;
+/* REMOVE FOOTER */
+footer {
+    display: none !important;
 }
 
-/* MAIN CULPRIT */
+/* NO WHITE STRIP */
+section.main,
 section.main > div.block-container {
     background: transparent !important;
     padding-bottom: 0 !important;
 }
 
-/* Ensure dark bg continues till bottom */
-div[data-testid="stAppViewContainer"] {
-    background: radial-gradient(
-        circle at top,
-        #111827 0%,
-        #0B0F1A 45%,
-        #020617 100%
-    ) !important;
-}
-
-/* Chat input wrapper blend */
-section[data-testid="stChatInput"] {
-    background: linear-gradient(
-        180deg,
-        rgba(11,15,26,0.98),
-        rgba(11,15,26,1)
-    ) !important;
-    margin-bottom: 0 !important;
-}
-
-/* Safety for extreme bottom (Windows + Chrome) */
 html, body {
     background: #020617 !important;
 }
@@ -353,7 +258,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
 # =================================================
 # SESSION STATE
 # =================================================
@@ -364,7 +268,6 @@ if "messages" not in st.session_state:
             "content": "👋 **Hey! How can I help you today with PO, GR & Supplier analysis?**"
         }
     ]
-
 
 # =================================================
 # CHAT HISTORY
